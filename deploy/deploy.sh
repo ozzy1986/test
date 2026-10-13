@@ -3,7 +3,7 @@
 #   deploy/deploy.sh             — [build.sh локально] → загрузка → [remote-build.sh на сервере]
 #                                  → переключение current → setup-server → рестарт → healthcheck
 #   deploy/deploy.sh --rollback  — вернуть релиз, предшествующий текущему
-#   HEALTH_PATH=/api/health deploy/deploy.sh — свой путь для healthcheck (по умолчанию /)
+#   HEALTH_PATH=/api/health deploy/deploy.sh — свой путь для healthcheck (по умолчанию /api/health)
 #
 # Хуки необязательны, кладутся в deploy/:
 #   build.sh        — локальная сборка (npm run build и т.п.) до загрузки
@@ -20,7 +20,7 @@ CONFIG=deploy/.env
 HOST=${DEPLOY_HOST:?нет DEPLOY_HOST: скопируйте deploy/.env.example в deploy/.env}
 ROOT=/var/www/test.ozzy1986.com
 URL=https://test.ozzy1986.com
-HEALTH=${HEALTH_PATH:-/}
+HEALTH=${HEALTH_PATH:-/api/health}
 
 switch_to() {  # $1 — абсолютный путь релиза
   ssh "$HOST" "ln -sfn $1 $ROOT/current.tmp && mv -Tf $ROOT/current.tmp $ROOT/current \

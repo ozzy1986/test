@@ -1,8 +1,8 @@
-# Юнит бэкенда. setup-server.sh ставит его, только если в релизе есть deploy/start.sh.
-# start.sh должен поднять сервер на 127.0.0.1:$PORT (8120).
+# Юнит сервиса. setup-server.sh ставит его, если в релизе есть deploy/start.sh.
 [Unit]
-Description=Test assignment test.ozzy1986.com
+Description=Orders dedupe service test.ozzy1986.com (FastAPI/uvicorn)
 After=network.target postgresql.service
+Wants=postgresql.service
 StartLimitIntervalSec=0
 
 [Service]
@@ -17,14 +17,32 @@ Restart=always
 RestartSec=3
 
 # Один сервис не должен уронить сервер.
-MemoryHigh=250M
-MemoryMax=300M
+MemoryHigh=150M
+MemoryMax=200M
 TasksMax=64
 
+# Песочница: ФС только на чтение, без привилегий, свой /tmp.
 NoNewPrivileges=true
 ProtectSystem=strict
 ProtectHome=true
 PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+AmbientCapabilities=
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged @resources
 
 [Install]
 WantedBy=multi-user.target
