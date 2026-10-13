@@ -1,0 +1,30 @@
+# Юнит бэкенда. setup-server.sh ставит его, только если в релизе есть deploy/start.sh.
+# start.sh должен поднять сервер на 127.0.0.1:$PORT (8120).
+[Unit]
+Description=Test assignment test.ozzy1986.com
+After=network.target postgresql.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=testapp
+Group=testapp
+WorkingDirectory=/var/www/test.ozzy1986.com/current
+EnvironmentFile=/var/www/test.ozzy1986.com/shared/.env
+Environment=PORT=8120 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /var/www/test.ozzy1986.com/current/deploy/start.sh
+Restart=always
+RestartSec=3
+
+# Один сервис не должен уронить сервер.
+MemoryHigh=250M
+MemoryMax=300M
+TasksMax=64
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
