@@ -111,6 +111,18 @@ a {
 a:hover { color: var(--brand-dark); text-decoration-thickness: 2px; }
 a:focus-visible { outline: 3px solid var(--pool); outline-offset: 2px; border-radius: 3px; }
 
+/* Internal links: target page shown next to the anchor */
+a[data-target]::after {
+  content: "\2192\00a0" attr(data-target);
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+  font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
 ul, ol { margin: 0 0 18px; padding-left: 24px; }
 li { margin-bottom: 8px; }
 li::marker { color: var(--brand); font-weight: 700; }

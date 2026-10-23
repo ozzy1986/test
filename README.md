@@ -62,5 +62,6 @@ bash deploy/deploy.sh                    # деплой на VPS с healthcheck 
 
 Статичный HTML (`public/screen-enclosure-cost-florida/index.html`, стили — `public/assets/blog.css`), Apache
 отдаёт его с диска мимо приложения (`Alias` + `ProxyPass … !` в `deploy/apache-test.ozzy1986.com-le-ssl.conf`).
-Две внутренние ссылки в тексте ведут на `#`, целевой адрес — в `data-target`. Страница закрыта от индексации
-заголовком `X-Robots-Tag: noindex` (тестовая копия статьи).
+Две внутренние ссылки в тексте ведут на несуществующие якоря (клик никуда не перебрасывает), целевой адрес —
+в `data-target`, CSS показывает его меткой рядом с анкором. На время проверки задания
+индексация открыта; после проверки вернуть `X-Robots-Tag: noindex` в vhost (тестовая копия статьи).
