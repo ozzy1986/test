@@ -55,3 +55,11 @@ python -m venv .venv && .venv/Scripts/pip install -r requirements-dev.txt
 .venv/Scripts/uvicorn app.main:app       # локально без базы (DATABASE_URL не задан — только память)
 bash deploy/deploy.sh                    # деплой на VPS с healthcheck и автооткатом
 ```
+
+## SEO-страница
+
+Статья «How Much Does a Screen Enclosure Cost in Florida?»: https://test.ozzy1986.com/screen-enclosure-cost-florida/
+
+Статичный HTML (`public/screen-enclosure-cost-florida/index.html`, стили — `public/assets/blog.css`), Apache
+отдаёт его с диска мимо приложения (`Alias` + `ProxyPass … !` в `deploy/apache-test.ozzy1986.com-le-ssl.conf`).
+Внутренние ссылки ведут на `#`, целевой адрес — в `data-target`.
